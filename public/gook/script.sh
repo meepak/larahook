@@ -79,7 +79,7 @@ composer update >/dev/null
 end_step "Backend packages installed"
 
 start_step "Running database migrations..."
-php artisan db:wipe --force >/dev/null
+#php artisan db:wipe --force >/dev/null
 php artisan migrate --force >/dev/null
 end_step "Database wiped and migrated"
 

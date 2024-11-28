@@ -31,10 +31,11 @@
     <section class="bg-white rounded-lg shadow-lg p-6 mb-10">
         <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Latest Announcements</h2>
         <ul class="list-disc pl-6 space-y-2">
-            <li>Thank you for trying out our home-grown webhook alternative.</li>
-            <li>This project is a continuation of our store-requests project, completely rewritten as a server application.</li>
-            <li>Multi-user support, authentication, and individual storage support.</li>
-            <li>All submissions must be made through your designated subdomain.</li>
+            <li>This is basic webhook alternative.</li>
+            <li>Register with your illion email e.g. <i><b>your_name@illion.com.au</b></i></li>
+            <li>You will receive an email with code to setup a 2FA, which will be your password.</li>
+            <li>Your delivery end point is <i><b>raralabs.com.au/your_name</i></b> where, <i><b>your_name</i></b> is from your email address.</li>
+            <li>Login to view the dashboard to see your deliveries.</li>
         </ul>
     </section>
 
