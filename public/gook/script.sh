@@ -70,7 +70,7 @@ git checkout origin/master >/dev/null
 end_step "Checked out origin/master"
 
 start_step "Pulling origin/master..."
-git pull origin master >/dev/null
+git pull origin main >/dev/null
 end_step "Git pull completed"
 
 start_step "Installing backend packages using Composer..."
