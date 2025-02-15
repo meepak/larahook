@@ -93,20 +93,24 @@
     <div class="w-1/4 bg-white shadow-lg">
         <div class="p-4 border-b flex justify-between items-center">
             <h2 class="text-lg font-bold text-gray-800">API Requests</h2>
-            <form method="POST" action="{{ route('deleteRequests') }}" id="delete-requests-form">
-                @csrf
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                    Delete Selected
-                </button>
         </div>
         <div class="p-4 overflow-y-auto h-full">
                 @csrf
-                <div>
-                    <input type="checkbox" id="select-all" class="mr-2" onclick="toggleAll(this)">
-                    <label for="select-all" class="text-md font-bold text-gray-600">Select All  (@php echo count($apiRequests); @endphp)</label>
-                    <hr/>
-                    <br/>
+                <div class="mx-auto">    
+                    <form method="POST" action="{{ route('deleteRequests') }}" id="delete-requests-form">
+                    @csrf
+                    <div class="flex items-center">
+                        <input type="checkbox" id="select-all" class="mr-2" onclick="toggleAll(this)">
+                        <label for="select-all" class="text-md font-bold text-gray-600">Select All  (@php echo count($apiRequests); @endphp)</label>
+                    </div>
+                    <div class="flex items-center">
+                        <button type="submit" class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">
+                            Delete Selected
+                        </button>
+                    </div>
                 </div>
+                <hr/>
+                <br/>
                 <ul>
                     @forelse ($apiRequests as $request)
                         <li class="mb-2">
