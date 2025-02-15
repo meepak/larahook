@@ -91,13 +91,13 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                                 })();
                             </script>
                         @elseif ($mimeType === 'text/html')
-                            <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg" style="background-color: white;">
-                                <iframe src="/storage/{{ $filePath }}" class="w-full h-full" style="background-color: white;"></iframe>
-                            </div>
+                        <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg" style="background-color: white;">
+                            <iframe src="{{ route('previewFile', $file['uuid']) }}" class="w-full h-full" style="background-color: white;"></iframe>
+                        </div>
                         @else
                             <!-- Fallback preview (using iframe) for other file types -->
                             <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300">
-                                <iframe src="/storage/{{ $filePath }}" class="w-full h-full"></iframe>
+                                <iframe src="{{ route('previewFile', $file['uuid']) }}" class="w-full h-full"></iframe>
                             </div>
                         @endif
                     </div>
