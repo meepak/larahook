@@ -63,7 +63,9 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                         <strong>Actions:</strong> 
                         <a target="_blank" href="/download/{{ $file['uuid'] ?? '' }}" class="text-blue-500 hover:underline mr-4">Download File</a>
                         <button type="button" onclick="togglePreview('{{ $uniqueId }}')" class="text-blue-500 hover:underline">Toggle Preview</button>
-
+                        <div class="bg-blue-100 border border-blue-400 text-blue-700 font-sm px-4 py-1 rounded">
+                            Drag from bottom right cornor to resize
+                        </div>
                         @if ($mimeType === 'application/json')
                         @php
                             $jsonContent = Storage::disk('public')->get($filePath);
@@ -91,9 +93,6 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                         @else
                             <!-- Fallback preview (using iframe) for other file types -->
                             <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg">
-                                <div class="bg-blue-100 border border-blue-400 text-blue-700 font-sm px-4 py-1 rounded">
-                                    Drag from bottom right cornor to resize
-                                </div>
                                 <iframe src="/storage/{{ $filePath }}" class="w-full h-full"></iframe>
                             </div>
                         @endif

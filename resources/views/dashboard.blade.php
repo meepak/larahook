@@ -33,8 +33,8 @@
     </script>
 
     @if ($hasJsonFile)
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/json-formatter-js@2.3.3/dist/json-formatter.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/json-formatter-js@2.3.3/dist/json-formatter.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/json-formatter-js@2.5.18/dist/json-formatter.umd.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/json-formatter-js@2.5.18/dist/json-formatter.min.css" rel="stylesheet">
     @endif
     <style>
         table tr:nth-child(even) {
