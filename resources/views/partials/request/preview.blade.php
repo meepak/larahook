@@ -91,7 +91,7 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                                     }
                                 })();
                             </script>
-                        @if ($mimeType === 'application/pdf')
+                        @elseif ($mimeType === 'application/pdf')
                             <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg" style="background-color: white;">
                                 <iframe class="w-full h-full" src="{{ route('previewFile', $file['uuid']) }}" style="background-color: white;"></iframe>
                             </div>
