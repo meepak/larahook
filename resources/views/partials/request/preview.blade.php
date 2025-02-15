@@ -64,7 +64,25 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                         <a target="_blank" href="/download/{{ $file['uuid'] ?? '' }}" class="text-blue-500 hover:underline mr-4">Download File</a>
                         <button type="button" onclick="togglePreview('{{ $uniqueId }}')" class="text-blue-500 hover:underline">Toggle Preview</button>
                         @if ($mimeType === 'application/json')
-                           @include('partials.request.files.json')
+                            @php
+                                $jsonContent = Storage::disk('public')->get($filePath);
+                                $decodedJson = json_decode($jsonContent, true);
+                            @endphp
+                            <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg">
+                                <!-- Container for JSON Formatter -->
+                                <div id="jsonFormatter-{{ $uniqueId }}" class="p-4 bg-gray-100"></div>
+                            </div>
+                            <script>
+                                (function() {
+                                    var container = document.getElementById('jsonFormatter-{{ $uniqueId }}');
+                                    if (container) {
+                                        var jsonData = {!! json_encode($decodedJson) !!};
+                                        // Create a formatter that expands 2 levels by default
+                                        var formatter = new JSONFormatter(jsonData, 10);
+                                        container.appendChild(formatter.render());
+                                    }
+                                })();
+                            </script>
                         @elseif ($mimeType === 'text/html')
                             <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg" style="background-color: white;">
                                 <iframe src="/storage/{{ $filePath }}" class="w-full h-full" style="background-color: white;"></iframe>

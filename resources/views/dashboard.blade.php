@@ -56,7 +56,7 @@
             background-color: #ffc7e7;
         }
         .resizable-container {
-            resize: both;    
+            resize: vertical;    
             overflow: auto;  
             width: 100%;
             height: 16rem;
