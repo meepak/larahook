@@ -39,6 +39,12 @@
         .group-5 {
             background-color: #ffc7e7;
         }
+        .resizable-container {
+            resize: both;    
+            overflow: auto;  
+            width: 100%;
+            height: 16rem;  
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -168,8 +174,8 @@
                                 echo '<button type="button" onclick="togglePreview(\'' . $uniqueId . '\')" class="text-blue-500 hover:underline">Toggle Preview</button>';
 
                                 // Collapsible iframe for file preview
-                                echo '<div id="' . $uniqueId . '" class="mt-4 hidden">';
-                                echo '<iframe src="/storage/' . $filePath . '" class="w-full h-64 border border-gray-300 rounded-lg"></iframe>';
+                                echo '<div id="' . $uniqueId . '" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg">';
+                                echo '<iframe src="/storage/' . $filePath . '" class="w-full h-full rounded-lg"></iframe>';
                                 echo '</div>';
 
                                 echo '</div>';

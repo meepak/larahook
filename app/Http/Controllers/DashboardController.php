@@ -168,8 +168,13 @@ class DashboardController extends Controller
     public function deleteRequests(Request $request)
     {
         $ids = $request->input('ids', []);
-        ApiRequest::whereIn('id', $ids)->delete();
-        return redirect()->route('dashboard')->with('message', 'Selected requests deleted successfully.');
+        $count = count($ids);
+        if($count > 0) {
+            ApiRequest::whereIn('id', $ids)->delete();
+            return redirect()->route('dashboard')->with('message', "$count Selected requests deleted successfully.");
+        } 
+
+        return redirect()->route('dashboard')->with('message', 'You didn\'t select any requests to delete.');
     }
 
 
