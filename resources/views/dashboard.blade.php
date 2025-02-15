@@ -96,7 +96,7 @@
         </div>
         <div class="p-4 overflow-y-auto h-full">
                 @csrf
-                <div class="mx-auto">    
+                <div class="mx-auto flex justify-between items-center">
                     <form method="POST" action="{{ route('deleteRequests') }}" id="delete-requests-form">
                     @csrf
                     <div class="flex items-center">
