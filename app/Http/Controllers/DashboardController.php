@@ -180,7 +180,6 @@ class DashboardController extends Controller
         return compact('storedPath', 'originalName', 'fullPath');
     }
 
-    // Not used at the moment
     public function previewFile($fileUuid)
     {
         $fileData = $this->getFileDetails($fileUuid);
