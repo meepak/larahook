@@ -75,15 +75,13 @@
     <div class="w-1/4 bg-white shadow-lg">
         <div class="p-4 border-b flex justify-between items-center">
             <h2 class="text-lg font-bold text-gray-800">API Requests</h2>
-            <form method="POST" action="{{ route('deleteRequests') }}">
+            <form method="POST" action="{{ route('deleteRequests') }}" id="delete-requests-form">
                 @csrf
                 <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
                     Delete Selected
                 </button>
-            </form>
         </div>
         <div class="p-4 overflow-y-auto h-full">
-            <form method="POST" action="{{ route('deleteRequests') }}" id="delete-requests-form">
                 @csrf
                 <div>
                     <input type="checkbox" id="select-all" class="mr-2" onclick="toggleAll(this)">
@@ -116,7 +114,7 @@
                 </div>
             </div>
         @endif
-        <h2 class="text-xl font-bold text-gray-800 mb-4">API Request Preview</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">API Request Preview - @php echo $createdAt; @endphp</h2>
         @if (isset($requestDetails))
             <table class="table-auto w-full border border-gray-300">
                 @php

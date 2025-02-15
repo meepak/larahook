@@ -130,6 +130,7 @@ class DashboardController extends Controller
             'requestDetails' => $requestDetails,
             'files' => $files,
             'apiRequests' => $apiRequests,
+            'createdAt' => $apiRequest->created_at,
         ]);
     }
 
