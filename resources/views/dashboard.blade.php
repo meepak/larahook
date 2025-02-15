@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Proviso</title>
+    <title>Welcome to LaraHook</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet"/>
@@ -74,7 +74,7 @@
     <!-- Sidebar -->
     <div class="w-1/4 bg-white shadow-lg">
         <div class="p-4 border-b flex justify-between items-center">
-            <h2 class="text-lg font-bold text-gray-800">API Requests (@php echo count($apiRequests); @endphp)</h2>
+            <h2 class="text-lg font-bold text-gray-800">API Requests</h2>
             <form method="POST" action="{{ route('deleteRequests') }}">
                 @csrf
                 <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
@@ -87,7 +87,7 @@
                 @csrf
                 <div>
                     <input type="checkbox" id="select-all" class="mr-2" onclick="toggleAll(this)">
-                    <label for="select-all" class="text-md font-bold text-gray-600">Select All</label>
+                    <label for="select-all" class="text-md font-bold text-gray-600">Select All  (@php echo count($apiRequests); @endphp)</label>
                     <hr/>
                     <br/>
                 </div>
@@ -109,6 +109,13 @@
 
     <!-- Main Content -->
     <div class="flex-1 p-6 overflow-x-scroll"> <!-- Prevent horizontal scrolling -->
+        @if (session('message'))
+            <div class="container mx-auto my-4">
+                <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
+                    {{ session('message') }}
+                </div>
+            </div>
+        @endif
         <h2 class="text-xl font-bold text-gray-800 mb-4">API Request Preview</h2>
         @if (isset($requestDetails))
             <table class="table-auto w-full border border-gray-300">
