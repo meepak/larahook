@@ -69,15 +69,15 @@
 <!-- Header -->
 <header class="bg-white shadow-md py-4">
     <div class="container mx-auto flex justify-between items-center px-4">
-        <!-- Logo -->
-        <div class="flex items-left space-x-2">
+        <!-- Logo (Left Aligned) -->
+        <div class="flex items-center space-x-2">
             <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
                 LH
             </div>
             <h1 class="text-xl font-bold text-gray-800">LARAHOOK</h1>
         </div>
-        <!-- User Info and Logout -->
-        <div class="flex items-right space-x-4">
+        <!-- User Info and Logout (Right Aligned) -->
+        <div class="flex items-center space-x-4">
             <span class="text-gray-800">Welcome {{ Auth::user()->username }}!</span>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
