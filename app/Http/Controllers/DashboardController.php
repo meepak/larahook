@@ -114,36 +114,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function downloadFile($fileUuid)
-    {
-        // Check if the authenticated user owns the file
-        $fileRecord = ApiRequest::where('username', Auth::user()->username)
-            ->whereJsonContains('files', [['uuid' => $fileUuid]]) // Assuming file UUID is stored under 'field_name'
-            ->first();
-
-        if (!$fileRecord) {
-            abort(403, 'Unauthorized access to the file.');
-        }
-
-        // Find the file details in the files JSON array
-        $fileDetails = collect(json_decode($fileRecord->files, true))->firstWhere('uuid', $fileUuid);
-
-        if (!$fileDetails) {
-            abort(404, 'File not found.');
-        }
-
-        // Get the stored file path and original name
-        $storedPath = $fileDetails['stored_path'];
-        $originalName = $fileDetails['original_name'];
-
-        // Ensure the file exists on disk
-        if (!Storage::disk('public')->exists($storedPath)) {
-            abort(404, 'File not found.');
-        }
-
-        // Serve the file for download with its original name
-        return Storage::disk('public')->download($storedPath, $originalName);
-    }
 
 
     public function deleteRequests(Request $request)
@@ -156,6 +126,9 @@ class DashboardController extends Controller
             $apiRequests = ApiRequest::whereIn('id', $ids)->get();
     
             foreach ($apiRequests as $apiRequest) {
+                if($apiRequest->username !== Auth::user()->username) {
+                    continue; // only allow to delete your own file
+                }
                 // Decode the files JSON to get file details
                 $files = json_decode($apiRequest->files, true);
                 if ($files) {
@@ -174,5 +147,55 @@ class DashboardController extends Controller
         return redirect()->route('dashboard')->with('message', "You didn't select any requests to delete.");
     }
 
+    protected function getFileDetails($fileUuid)
+    {
+        // Retrieve the API request record that contains the file details.
+        $fileRecord = ApiRequest::where('username', Auth::user()->username)
+            ->whereJsonContains('files', [['uuid' => $fileUuid]])
+            ->first();
+    
+        if (!$fileRecord) {
+            abort(404, 'File not found.');
+        }
+    
+        // Decode the files JSON and find the file with the matching UUID.
+        $files = json_decode($fileRecord->files, true);
+        $fileDetails = collect($files)->firstWhere('uuid', $fileUuid);
+    
+        if (!$fileDetails) {
+            abort(404, 'File not found.');
+        }
+    
+        $storedPath   = $fileDetails['stored_path'];
+        $originalName = $fileDetails['original_name'];
+    
+        // Ensure the file exists on disk.
+        if (!Storage::disk('public')->exists($storedPath)) {
+            abort(404, 'File not found.');
+        }
+    
+        // Get the full path to the file.
+        $fullPath = Storage::disk('public')->path($storedPath);
+    
+        return compact('storedPath', 'originalName', 'fullPath');
+    }
+
+    public function previewFile($fileUuid)
+    {
+        $fileData = $this->getFileDetails($fileUuid);
+
+        // Serve the file with the inline Content-Disposition header.
+        return response()->file($fileData['fullPath'], [
+            'Content-Disposition' => 'inline; filename="' . $fileData['originalName'] . '"'
+        ]);
+    }
+
+    public function downloadFile($fileUuid)
+    {
+        $fileData = $this->getFileDetails($fileUuid);
+
+        // Serve the file for download with its original name.
+        return Storage::disk('public')->download($fileData['storedPath'], $fileData['originalName']);
+    }
 
 }

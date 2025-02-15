@@ -3,7 +3,7 @@ function renderJsonAsTable($json, $groupCounter = 1): void
 {
     foreach ($json as $key => $value) {
         echo '<tr class="group-' . ($groupCounter % 3 + 1) . '">';
-        echo '<td class="w-1 p-2 font-medium text-gray-800 break-words whitespace-pre-wrap">' . htmlspecialchars(trim($key)) . '</td>';
+        echo '<td class="w-1 p-2 font-medium text-gray-800 whitespace-nowrap">' . htmlspecialchars(trim($key)) . '</td>';
 
         // Check the type of value
         if (is_array($value)) {
@@ -58,7 +58,14 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                     <div class="mb-4 p-4 {{ $index % 2 == 0 ? 'group-4' : 'group-5' }} border border-gray-300">
                         <strong>Field Name:</strong> {{ htmlspecialchars($file['field_name']) }}<br>
                         <strong>Original Name:</strong> {!! $originalName !!}<br>
-                        <strong>Size:</strong> {{ htmlspecialchars($file['size']) }} bytes<br>
+                        <strong>Size:</strong> 
+                        @if($file['size'] >= 1048576)
+                            {{ number_format($file['size'] / 1048576, 2) }} MB
+                        @elseif($file['size'] >= 1024)
+                            {{ number_format($file['size'] / 1024, 2) }} KB
+                        @else
+                            {{ $file['size'] }} bytes
+                        @endif
                         <strong>MIME Type:</strong> {{ htmlspecialchars($mimeType) }}<br>
                         <strong>Actions:</strong> 
                         <a target="_blank" href="/download/{{ $file['uuid'] ?? '' }}" class="text-blue-500 hover:underline mr-4">Download File</a>

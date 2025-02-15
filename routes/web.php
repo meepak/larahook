@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/preview', [DashboardController::class, 'previewRequest'])->name('previewRequest');
     Route::post('/delete-requests', [DashboardController::class, 'deleteRequests'])->name('deleteRequests');
 
+    Route::get('/preview/{uuid}', [DashboardController::class, 'previewFile'])->name('previewFile');
     Route::get('/download/{fileUuid}', [DashboardController::class, 'downloadFile'])->name('downloadFile');
 });
 
