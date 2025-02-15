@@ -170,12 +170,28 @@ class DashboardController extends Controller
     {
         $ids = $request->input('ids', []);
         $count = count($ids);
-        if($count > 0) {
-            ApiRequest::whereIn('id', $ids)->delete();
-            return redirect()->route('dashboard')->with('message', "$count Selected requests deleted successfully.");
-        } 
-
-        return redirect()->route('dashboard')->with('message', 'You didn\'t select any requests to delete.');
+    
+        if ($count > 0) {
+            // Retrieve all API requests matching the provided IDs.
+            $apiRequests = ApiRequest::whereIn('id', $ids)->get();
+    
+            foreach ($apiRequests as $apiRequest) {
+                // Decode the files JSON to get file details
+                $files = json_decode($apiRequest->files, true);
+                if ($files) {
+                    foreach ($files as $file) {
+                        // Delete each file from the public disk using its stored path.
+                        Storage::disk('public')->delete($file['stored_path']);
+                    }
+                }
+                // Delete the API request record.
+                $apiRequest->delete();
+            }
+    
+            return redirect()->route('dashboard')->with('message', "$count selected requests deleted successfully.");
+        }
+    
+        return redirect()->route('dashboard')->with('message', "You didn't select any requests to delete.");
     }
 
 
