@@ -74,7 +74,7 @@
     <!-- Sidebar -->
     <div class="w-1/4 bg-white shadow-lg">
         <div class="p-4 border-b flex justify-between items-center">
-            <h2 class="text-lg font-bold text-gray-800">API Requests (@php count($apiRequests) @endphp)</h2>
+            <h2 class="text-lg font-bold text-gray-800">API Requests (@php echo count($apiRequests); @endphp)</h2>
             <form method="POST" action="{{ route('deleteRequests') }}">
                 @csrf
                 <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
@@ -87,8 +87,9 @@
                 @csrf
                 <div>
                     <input type="checkbox" id="select-all" class="mr-2" onclick="toggleAll(this)">
-                    <label for="select-all" class="text-md text-bold text-gray-600">Select All</label>
+                    <label for="select-all" class="text-md font-bold text-gray-600">Select All</label>
                     <hr/>
+                    <br/>
                 </div>
                 <ul>
                     @forelse ($apiRequests as $request)
