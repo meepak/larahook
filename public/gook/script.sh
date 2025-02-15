@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Parse optional parameters
+NO_COMPOSER=0
+for arg in "$@"; do
+    if [ "$arg" == "--no-composer" ]; then
+        NO_COMPOSER=1
+    fi
+done
+
 # Start timing for the whole script
 script_start_time=$(date +%s)
 
@@ -62,7 +70,10 @@ end_step "Changed directory to $(pwd)"
 
 start_step "Cleaning up local changes..."
 git stash -u >/dev/null
-rm -rf public/vendor vendor
+# Only remove vendor directories if --no-composer was NOT provided
+if [ "$NO_COMPOSER" -eq 0 ]; then
+    rm -rf public/vendor vendor
+fi
 end_step "Local changes stashed, vendor directories cleaned"
 
 start_step "Checking out origin/main..."
@@ -73,10 +84,13 @@ start_step "Pulling origin/master..."
 git pull origin main >/dev/null
 end_step "Git pull completed"
 
-start_step "Installing backend packages using Composer..."
-export COMPOSER_ALLOW_SUPERUSER=1
-composer update >/dev/null
-end_step "Backend packages installed"
+# Only run Composer update if --no-composer was not passed
+if [ "$NO_COMPOSER" -eq 0 ]; then
+    start_step "Installing backend packages using Composer..."
+    export COMPOSER_ALLOW_SUPERUSER=1
+    composer update >/dev/null
+    end_step "Backend packages installed"
+fi
 
 start_step "Running database migrations..."
 #php artisan db:wipe --force >/dev/null

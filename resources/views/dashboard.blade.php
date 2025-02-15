@@ -114,7 +114,7 @@
                 </div>
             </div>
         @endif
-        <h2 class="text-xl font-bold text-gray-800 mb-4">API Request Preview <?= isset($createdAt) ? '- ' . $createdAt : '' ?></h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">API Request Preview <?= isset($createdAt) ? '[ ' . $createdAt . ' ]' : '' ?></h2>
         @if (isset($requestDetails))
             <table class="table-auto w-full border border-gray-300">
                 @php
