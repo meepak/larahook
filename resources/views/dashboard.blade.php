@@ -60,7 +60,7 @@
         </div>
         <!-- User Info and Logout -->
         <div class="flex items-center space-x-4">
-            <span class="text-gray-800">Welcome, {{ Auth::user()->username }}</span>
+            <span class="text-gray-800">Welcome {{ Auth::user()->username }}!</span>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="text-red-500 hover:text-red-700 font-semibold">Logout</button>
@@ -74,7 +74,7 @@
     <!-- Sidebar -->
     <div class="w-1/4 bg-white shadow-lg">
         <div class="p-4 border-b flex justify-between items-center">
-            <h2 class="text-lg font-bold text-gray-800">API Requests</h2>
+            <h2 class="text-lg font-bold text-gray-800">API Requests (@php count($apiRequests) @endphp)</h2>
             <form method="POST" action="{{ route('deleteRequests') }}">
                 @csrf
                 <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
@@ -87,7 +87,8 @@
                 @csrf
                 <div>
                     <input type="checkbox" id="select-all" class="mr-2" onclick="toggleAll(this)">
-                    <label for="select-all" class="text-sm text-gray-600">Select All</label>
+                    <label for="select-all" class="text-md text-bold text-gray-600">Select All</label>
+                    <hr/>
                 </div>
                 <ul>
                     @forelse ($apiRequests as $request)
