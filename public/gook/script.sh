@@ -81,7 +81,7 @@ end_step "Backend packages installed"
 start_step "Running database migrations..."
 #php artisan db:wipe --force >/dev/null
 php artisan migrate --force >/dev/null
-end_step "Database wiped and migrated"
+end_step "Database migrated"
 
 start_step "Resetting backend configuration cache..."
 php artisan config:clear >/dev/null
