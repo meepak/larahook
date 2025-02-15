@@ -163,33 +163,50 @@
                 @endphp
                 @php renderJsonAsTable($requestDetails, 1); @endphp
                 <tr>
-                    @php
-                        if (!empty($files)) {
-                            echo '<td colspan="2" class="p-2 text-gray-700">';
-                            foreach ($files as $index => $file) {
-                                $filePath = htmlspecialchars($file['stored_path']);
-                                $originalName = htmlspecialchars($file['original_name']);
-                                $uniqueId = 'file-preview-' . $index; // Unique ID for toggling the iframe
+                    @if (!empty($files))
+                        <td colspan="2" class="p-2 text-gray-700">
+                            @foreach ($files as $index => $file)
+                                @php
+                                    $filePath    = $file['stored_path'];
+                                    $originalName= htmlspecialchars($file['original_name']);
+                                    $uniqueId    = 'file-preview-' . $index;
+                                    $mimeType    = $file['mime_type'];
+                                @endphp
+                                <div class="mb-4 p-4 {{ $index % 2 == 0 ? 'group-4' : 'group-5' }} border border-gray-300 rounded-lg">
+                                    <strong>Field Name:</strong> {{ htmlspecialchars($file['field_name']) }}<br>
+                                    <strong>Original Name:</strong> {!! $originalName !!}<br>
+                                    <strong>Size:</strong> {{ htmlspecialchars($file['size']) }} bytes<br>
+                                    <strong>MIME Type:</strong> {{ htmlspecialchars($mimeType) }}<br>
+                                    <strong>Actions:</strong> 
+                                    <a target="_blank" href="/download/{{ $file['uuid'] ?? '' }}" class="text-blue-500 hover:underline mr-4">Download File</a>
+                                    <button type="button" onclick="togglePreview('{{ $uniqueId }}')" class="text-blue-500 hover:underline">Toggle Preview</button>
 
-                                echo '<div class="mb-4 p-4 ' . ($index % 2 == 0 ? 'group-4' : 'group-5') . ' border border-gray-300 rounded-lg">';
-                                echo '<strong>Field Name:</strong> ' . htmlspecialchars($file['field_name']) . '<br>';
-                                echo '<strong>Original Name:</strong> ' . $originalName . '<br>';
-                                echo '<strong>Size:</strong> ' . htmlspecialchars($file['size']) . ' bytes<br>';
-                                echo '<strong>MIME Type:</strong> ' . htmlspecialchars($file['mime_type']) . '<br>';
-                                echo '<strong>Actions:</strong> ';
-                                echo '<a target="_blank" href="/download/' . ($file['uuid'] ?? '') . '" class="text-blue-500 hover:underline mr-4">Download File</a>';
-                                echo '<button type="button" onclick="togglePreview(\'' . $uniqueId . '\')" class="text-blue-500 hover:underline">Toggle Preview</button>';
+                                    @if ($mimeType === 'application/json')
+                                        @php
 
-                                // Collapsible iframe for file preview
-                                echo '<div id="' . $uniqueId . '" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg">';
-                                echo '<iframe src="/storage/' . $filePath . '" class="w-full h-full rounded-lg"></iframe>';
-                                echo '</div>';
-
-                                echo '</div>';
-                            }
-                            echo '</td>';
-                        }
-                    @endphp
+                                            // Read the file contents from the public disk (adjust if needed)
+                                            $jsonContent = Illuminate\Support\Facades\Storage::disk('public')->get($filePath);
+                                            $decodedJson = json_decode($jsonContent, true);
+                                            // Pretty print with 4 spaces indent and unescaped slashes
+                                            $prettyJson  = json_encode($decodedJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+                                        @endphp
+                                        <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg bg-gray-100">
+                                            <pre class="p-4 overflow-auto" style="background-color: #f6f8fa;">{{ htmlspecialchars($prettyJson) }}</pre>
+                                        </div>
+                                    @elseif ($mimeType === 'text/html')
+                                        <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg" style="background-color: white;">
+                                            <iframe src="/storage/{{ $filePath }}" class="w-full h-full" style="background-color: white;"></iframe>
+                                        </div>
+                                    @else
+                                        <!-- Fallback preview (using iframe) for other file types -->
+                                        <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg">
+                                            <iframe src="/storage/{{ $filePath }}" class="w-full h-full"></iframe>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </td>
+                    @endif
 
                 </tr>
             </table>
