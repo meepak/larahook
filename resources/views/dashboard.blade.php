@@ -68,7 +68,7 @@
 <body class="bg-gray-100">
 <!-- Header -->
 <header class="bg-white shadow-md py-4">
-    <div class="container mx-auto flex justify-between items-center px-4">
+    <div class="mx-auto flex justify-between items-center px-4">
         <!-- Logo (Left Aligned) -->
         <div class="flex items-center space-x-2">
             <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
