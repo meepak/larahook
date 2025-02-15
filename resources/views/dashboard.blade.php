@@ -113,8 +113,7 @@
                             </button>
                         </div>
                     </div>
-                <hr/>
-                <br/>
+                <hr class="py-4"/>
                 <ul>
                     @forelse ($apiRequests as $request)
                         <li class="mb-2">

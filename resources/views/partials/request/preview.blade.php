@@ -3,7 +3,7 @@ function renderJsonAsTable($json, $groupCounter = 1): void
 {
     foreach ($json as $key => $value) {
         echo '<tr class="group-' . ($groupCounter % 3 + 1) . '">';
-        echo '<td class="p-2 font-medium text-gray-800 break-words whitespace-pre-wrap">' . htmlspecialchars(trim($key)) . '</td>';
+        echo '<td class="w-max p-2 font-medium text-gray-800 break-words whitespace-pre-wrap">' . htmlspecialchars(trim($key)) . '</td>';
 
         // Check the type of value
         if (is_array($value)) {
