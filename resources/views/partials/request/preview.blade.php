@@ -66,6 +66,7 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                         @else
                             {{ $file['size'] }} bytes
                         @endif
+                        <br/>
                         <strong>MIME Type:</strong> {{ htmlspecialchars($mimeType) }}<br>
                         <strong>Actions:</strong> 
                         <a target="_blank" href="/download/{{ $file['uuid'] ?? '' }}" class="text-blue-500 hover:underline mr-4">Download File</a>
@@ -90,14 +91,9 @@ function renderJsonAsTable($json, $groupCounter = 1): void
                                     }
                                 })();
                             </script>
-                        @elseif ($mimeType === 'text/html')
-                        <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg" style="background-color: white;">
-                            <iframe src="{{ route('previewFile', $file['uuid']) }}" class="w-full h-full" style="background-color: white;"></iframe>
-                        </div>
                         @else
-                            <!-- Fallback preview (using iframe) for other file types -->
-                            <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300">
-                                <iframe src="{{ route('previewFile', $file['uuid']) }}" class="w-full h-full"></iframe>
+                            <div id="{{ $uniqueId }}" class="mt-4 hidden resizable-container border border-gray-300 rounded-lg" style="background-color: white;">
+                                <iframe sandbox="allow-forms allow-scripts allow-same-origin"  class="w-full h-full src="/storage/{{ $filePath }}" class="w-full h-full" style="background-color: white;"></iframe>
                             </div>
                         @endif
                     </div>
