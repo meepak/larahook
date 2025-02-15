@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/preview', [DashboardController::class, 'previewRequest'])->name('previewRequest');
     Route::post('/delete-requests', [DashboardController::class, 'deleteRequests'])->name('deleteRequests');
 
-    Route::post('/download/{fileUuid}', [DashboardController::class, 'downloadFile'])->name('downloadFile');
+    Route::get('/download/{fileUuid}', [DashboardController::class, 'downloadFile'])->name('downloadFile');
 });
 
 // Public webhook route
