@@ -65,9 +65,9 @@ git stash -u >/dev/null
 rm -rf public/vendor vendor
 end_step "Local changes stashed, vendor directories cleaned"
 
-start_step "Checking out origin/master..."
-git checkout origin/master >/dev/null
-end_step "Checked out origin/master"
+start_step "Checking out origin/main..."
+git checkout origin/main >/dev/null
+end_step "Checked out origin/main"
 
 start_step "Pulling origin/master..."
 git pull origin main >/dev/null
