@@ -110,7 +110,7 @@
                     @forelse ($apiRequests as $request)
                         <li class="mb-2">
                             <input type="checkbox" name="ids[]" value="{{ $request->id }}" class="mr-2">
-                            <a href="{{ route('previewRequest', ['id' => $request->id]) }}" class="text-blue-500 hover:underline">
+                            <a href="{{ route('previewRequest', ['id' => $request->id]) }}" class="text-blue-500 hover:underline <?= (isset($requestId) && $request->id == $requestId) ? 'bg-blue-500 text-white font-bold' : '' ?>">
                                 {{ $request->created_at->format('Y-m-d H:i:s') }}
                             </a>
                         </li>

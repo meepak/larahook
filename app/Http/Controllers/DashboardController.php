@@ -86,27 +86,6 @@ class DashboardController extends Controller
         return response()->json(['status' => 'Request logged successfully']);
     }
 
-    public function deleteRequest($id)
-    {
-        $request = ApiRequest::find($id);
-
-        if (!$request) {
-            return redirect()->back()->withErrors(['error' => 'Request not found.']);
-        }
-
-        // Delete associated files
-        $files = json_decode($request->files, true);
-        if ($files) {
-            foreach ($files as $file) {
-                Storage::disk('public')->delete($file['stored_path']);
-            }
-        }
-
-        $request->delete();
-
-        return redirect()->route('dashboard')->with('message', 'Request deleted successfully.');
-    }
-
     public function previewRequest(Request $request)
     {
         $username = Auth::user()->username;
@@ -131,6 +110,7 @@ class DashboardController extends Controller
             'files' => $files,
             'apiRequests' => $apiRequests,
             'createdAt' => $apiRequest->created_at,
+            'requestId' => $apiRequest->id,
         ]);
     }
 
