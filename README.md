@@ -8,7 +8,6 @@ LaraHook is a self-hosted webhook.site alternative, designed to provide essentia
 - Secure user authentication with Google 2FA.
 - Each user gets a unique static link with private data access.
 - Designed for self-hosting, with an option to restrict users to a specific email domain.
-- No extra dependencies beyond the Laravel framework.
 
 ## Installation
 
