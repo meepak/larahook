@@ -54,13 +54,13 @@
         <!-- Logo -->
         <div class="flex items-center space-x-2">
             <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-                S
+                LH
             </div>
-            <h1 class="text-xl font-bold text-gray-800">STORE REQUESTS</h1>
+            <h1 class="text-xl font-bold text-gray-800">LARAHOOK</h1>
         </div>
         <!-- User Info and Logout -->
         <div class="flex items-center space-x-4">
-            <span class="text-gray-800">Welcome, {{ Auth::user()->name }}</span>
+            <span class="text-gray-800">Welcome, {{ Auth::user()->username }}</span>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="text-red-500 hover:text-red-700 font-semibold">Logout</button>
